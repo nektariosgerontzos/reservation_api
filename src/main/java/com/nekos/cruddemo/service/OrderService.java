@@ -1,6 +1,8 @@
 package com.nekos.cruddemo.service;
 
+import com.nekos.cruddemo.entity.CafeTables;
 import com.nekos.cruddemo.entity.Order;
+import org.aspectj.weaver.ast.Or;
 
 import java.util.List;
 
@@ -11,5 +13,6 @@ public interface OrderService {
     Order save(Order order);
     void deleteById(int id);
     Order update(int id, Order order);
+    List<Order> findOrdersByTable(int id); // id defines the Table id
 
 }

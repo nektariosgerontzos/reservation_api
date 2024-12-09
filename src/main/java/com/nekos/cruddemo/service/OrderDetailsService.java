@@ -12,5 +12,6 @@ public interface OrderDetailsService {
     void delete(int id);
     OrderDetails save(OrderDetails orderDetails);
     OrderDetails update(int id, OrderDetails orderDetails);
+    List<OrderDetails> findByOrder(int order_id);
 
 }

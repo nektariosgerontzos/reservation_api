@@ -1,7 +1,9 @@
 package com.nekos.cruddemo.service.Impl;
 
+import com.nekos.cruddemo.entity.Order;
 import com.nekos.cruddemo.entity.OrderDetails;
 import com.nekos.cruddemo.repository.OrderDetailsRepository;
+import com.nekos.cruddemo.repository.OrderRepository;
 import com.nekos.cruddemo.service.OrderDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 
     @Autowired
     private OrderDetailsRepository orderDetailsRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Override
     public List<OrderDetails> findAll() {
@@ -47,5 +51,14 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
                     return orderDetailsRepository.save(existingDetail);
                 })
                 .orElseThrow(()-> new IllegalArgumentException("Detail not found"));
+    }
+
+    @Override
+    public List<OrderDetails> findByOrder(int order_id) {
+        Order order = orderRepository.findById(order_id)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        return orderDetailsRepository.findByOrder(order);
+
     }
 }

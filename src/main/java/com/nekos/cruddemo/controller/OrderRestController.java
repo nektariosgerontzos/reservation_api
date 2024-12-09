@@ -40,4 +40,9 @@ public class OrderRestController {
         return orderService.update(id, order);
     }
 
+    @GetMapping("/ordersByTable/{id}")
+    public List<Order> findByTable(@PathVariable int id){
+        return orderService.findOrdersByTable(id);
+    }
+
 }

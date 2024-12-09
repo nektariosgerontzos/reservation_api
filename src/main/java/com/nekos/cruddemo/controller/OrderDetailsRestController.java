@@ -39,4 +39,9 @@ public class OrderDetailsRestController {
         return orderDetailsService.update(id, orderDetails);
     }
 
+    @GetMapping("/detailsByOrder/{id}")
+    public List<OrderDetails> findByOrder(@PathVariable int id){
+        return orderDetailsService.findByOrder(id);
+    }
+
 }

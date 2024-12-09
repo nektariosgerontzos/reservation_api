@@ -1,6 +1,8 @@
 package com.nekos.cruddemo.service.Impl;
 
+import com.nekos.cruddemo.entity.CafeTables;
 import com.nekos.cruddemo.entity.Order;
+import com.nekos.cruddemo.repository.CafeTablesRepository;
 import com.nekos.cruddemo.repository.OrderRepository;
 import com.nekos.cruddemo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CafeTablesRepository cafeTablesRepository;
 
     @Override
     public List<Order> findAll() {
@@ -48,5 +52,13 @@ public class OrderServiceImpl implements OrderService {
                     return orderRepository.save(existingorder);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Order to be updated not found"));
+    }
+
+    @Override
+    public List<Order> findOrdersByTable(int id) {
+        CafeTables table = cafeTablesRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not Found"));
+        return orderRepository.findByTable(table);
+
     }
 }
