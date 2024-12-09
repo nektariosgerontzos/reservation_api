@@ -13,10 +13,10 @@ public class OrderDetails {
     @Column(name = "order_detail_id")
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
     @Column(name = "quantity")
     private Integer quantity;
