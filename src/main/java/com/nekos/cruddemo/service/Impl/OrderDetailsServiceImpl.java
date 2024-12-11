@@ -2,13 +2,17 @@ package com.nekos.cruddemo.service.Impl;
 
 import com.nekos.cruddemo.entity.Order;
 import com.nekos.cruddemo.entity.OrderDetails;
+import com.nekos.cruddemo.entity.Product;
 import com.nekos.cruddemo.repository.OrderDetailsRepository;
 import com.nekos.cruddemo.repository.OrderRepository;
+import com.nekos.cruddemo.repository.ProductRepository;
 import com.nekos.cruddemo.service.OrderDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderDetailsServiceImpl implements OrderDetailsService {
@@ -17,6 +21,8 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     private OrderDetailsRepository orderDetailsRepository;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     public List<OrderDetails> findAll() {
@@ -36,7 +42,14 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 
     @Override
     public OrderDetails save(OrderDetails orderDetails) {
-        return orderDetailsRepository.save(orderDetails);
+        OrderDetails orderDetails1 = orderDetails;
+        Integer productId = orderDetails1.getProduct().getId();
+        Optional<Product> product = productRepository.findById(productId);
+        System.out.println("+++++++++"+ product.toString());
+        if (!product.isEmpty()){
+            orderDetails1.setPrice(product.get().getPrice());
+        }
+        return orderDetailsRepository.save(orderDetails1);
     }
 
     @Override

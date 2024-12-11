@@ -1,9 +1,11 @@
 package com.nekos.cruddemo.controller;
 
 import com.nekos.cruddemo.entity.Order;
+import com.nekos.cruddemo.entity.OrderDetails;
 import com.nekos.cruddemo.service.OrderService;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,6 +45,12 @@ public class OrderRestController {
     @GetMapping("/ordersByTable/{id}")
     public List<Order> findByTable(@PathVariable int id){
         return orderService.findOrdersByTable(id);
+    }
+
+    @GetMapping("/orders/{orderId}/details")
+    public ResponseEntity<List<OrderDetails>> getOrderDetails(@PathVariable Integer orderId) {
+        List<OrderDetails> orderDetails = orderService.getOrderDetails(orderId);
+        return ResponseEntity.ok(orderDetails);
     }
 
 }

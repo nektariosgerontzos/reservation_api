@@ -2,6 +2,7 @@ package com.nekos.cruddemo.service.Impl;
 
 import com.nekos.cruddemo.entity.CafeTables;
 import com.nekos.cruddemo.entity.Order;
+import com.nekos.cruddemo.entity.OrderDetails;
 import com.nekos.cruddemo.repository.CafeTablesRepository;
 import com.nekos.cruddemo.repository.OrderRepository;
 import com.nekos.cruddemo.service.OrderService;
@@ -60,5 +61,11 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Not Found"));
         return orderRepository.findByTable(table);
 
+    }
+
+    public List<OrderDetails> getOrderDetails(Integer orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        return order.getOrderDetails();
     }
 }
