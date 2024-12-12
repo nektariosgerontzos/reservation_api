@@ -1,5 +1,6 @@
 package com.nekos.cruddemo.service;
 
+import com.nekos.cruddemo.dto.OrderDTO;
 import com.nekos.cruddemo.entity.CafeTables;
 import com.nekos.cruddemo.entity.Order;
 import com.nekos.cruddemo.entity.OrderDetails;
@@ -18,5 +19,7 @@ public interface OrderService {
     List<Order> findOrdersByTable(int id); // id defines the Table id
     List<OrderDetails> getOrderDetails(Integer orderId);
     BigDecimal calculateTotalPrice(Integer orderId);
+    Order orderCompletion(int orderid);
+    OrderDTO toDTO(Order order);
 
 }

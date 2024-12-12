@@ -1,5 +1,6 @@
 package com.nekos.cruddemo.controller;
 
+import com.nekos.cruddemo.dto.OrderDTO;
 import com.nekos.cruddemo.entity.Order;
 import com.nekos.cruddemo.entity.OrderDetails;
 import com.nekos.cruddemo.service.OrderService;
@@ -29,8 +30,9 @@ public class OrderRestController {
     }
 
     @GetMapping("/orders/{id}")
-    public Order findById(@PathVariable int id){
-        return orderService.findById(id);
+    public OrderDTO findById(@PathVariable int id){
+        Order order = orderService.findById(id);
+        return orderService.toDTO(order);
     }
 
     @DeleteMapping("/orders/{id}")
@@ -54,11 +56,9 @@ public class OrderRestController {
         return ResponseEntity.ok(orderDetails);
     }
 
-    @GetMapping("/orders/{orderId}/totalPrice")
-    public BigDecimal getTotalPrice(@PathVariable int orderId){
-        BigDecimal total = orderService.calculateTotalPrice(orderId);
-        System.out.println("Total Price is: "+ total);
-        return total;
+    @PutMapping("/orders/{orderId}/completion")
+    public Order completeOrder(@PathVariable int orderId){
+        return orderService.orderCompletion(orderId);
     }
 
 }
