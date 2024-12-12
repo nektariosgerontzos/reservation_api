@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -51,6 +52,13 @@ public class OrderRestController {
     public ResponseEntity<List<OrderDetails>> getOrderDetails(@PathVariable Integer orderId) {
         List<OrderDetails> orderDetails = orderService.getOrderDetails(orderId);
         return ResponseEntity.ok(orderDetails);
+    }
+
+    @GetMapping("/orders/{orderId}/totalPrice")
+    public BigDecimal getTotalPrice(@PathVariable int orderId){
+        BigDecimal total = orderService.calculateTotalPrice(orderId);
+        System.out.println("Total Price is: "+ total);
+        return total;
     }
 
 }

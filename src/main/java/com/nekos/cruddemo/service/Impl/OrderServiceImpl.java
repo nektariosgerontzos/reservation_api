@@ -9,6 +9,7 @@ import com.nekos.cruddemo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -68,4 +69,16 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Order not found"));
         return order.getOrderDetails();
     }
+
+    @Override
+    public BigDecimal calculateTotalPrice(Integer orderId) {
+        List<OrderDetails> orderDetails = getOrderDetails(orderId);
+        BigDecimal total = new BigDecimal(0);
+        for(OrderDetails i: orderDetails){
+            total = total.add(i.getPrice());
+        }
+        return total;
+    }
+
+
 }
