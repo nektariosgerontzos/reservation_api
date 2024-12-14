@@ -47,7 +47,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         Optional<Product> product = productRepository.findById(productId);
         System.out.println("+++++++++"+ product.toString());
         if (!product.isEmpty()){
-            orderDetails1.setPrice(product.get().getPrice());
+            orderDetails1.setPrice(product.get().getPrice().multiply(new BigDecimal(orderDetails.getQuantity())));
         }
         return orderDetailsRepository.save(orderDetails1);
     }
