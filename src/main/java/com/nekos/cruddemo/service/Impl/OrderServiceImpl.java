@@ -58,6 +58,7 @@ public class OrderServiceImpl implements OrderService {
                     existingorder.setUpdatedAt(order.getUpdatedAt());
                     existingorder.setStatus(order.getStatus());
                     existingorder.setTotalPrice(order.getTotalPrice());
+                    existingorder.setCustomer(order.getCustomer());
                     return orderRepository.save(existingorder);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Order to be updated not found"));

@@ -22,6 +22,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
     @Column(name = "status")
     private String status;
     @Column(name = "total_price")
@@ -48,6 +51,16 @@ public class Order {
         this.updatedAt = updatedAt;
     }
 
+    public Order(Integer id, CafeTables cafeTable, User user, Customer customer, String status, BigDecimal totalPrice, Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.cafeTable = cafeTable;
+        this.user = user;
+        this.customer = customer;
+        this.status = status;
+        this.totalPrice = totalPrice;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 
     public Integer getId() {
         return id;
@@ -111,5 +124,13 @@ public class Order {
 
     public void setOrderDetails(List<OrderDetails> orderDetails) {
         this.orderDetails = orderDetails;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
