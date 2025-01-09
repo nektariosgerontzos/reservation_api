@@ -21,5 +21,6 @@ public interface OrderService {
     BigDecimal calculateTotalPrice(Integer orderId);
     Order orderCompletion(int orderid);
     OrderDTO toDTO(Order order);
+    List<OrderDTO> activeOrderByTable(int tableId);
 
 }

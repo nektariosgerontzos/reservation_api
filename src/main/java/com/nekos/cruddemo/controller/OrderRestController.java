@@ -61,4 +61,9 @@ public class OrderRestController {
         return orderService.orderCompletion(orderId);
     }
 
+    @GetMapping("/orders/{tableId}/pending")
+    public List<OrderDTO> pendingOrdersPerTable(@PathVariable int tableId){
+        return orderService.activeOrderByTable(tableId);
+    }
+
 }

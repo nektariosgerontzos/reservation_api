@@ -9,6 +9,7 @@ import com.nekos.cruddemo.repository.CafeTablesRepository;
 import com.nekos.cruddemo.repository.OrderRepository;
 import com.nekos.cruddemo.service.OrderDetailsService;
 import com.nekos.cruddemo.service.OrderService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,6 +73,8 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+
+
     public List<OrderDetails> getOrderDetails(Integer orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
@@ -112,6 +115,22 @@ public class OrderServiceImpl implements OrderService {
 
         return dto;
 
+    }
+
+    @Override
+    public List<OrderDTO> activeOrderByTable(int tableId) {
+        CafeTables cafeTables = cafeTablesRepository.findById(tableId)
+                .orElseThrow(()-> new RuntimeException("Not found"));
+
+        List<Order> orders = orderRepository.findByTable(cafeTables);
+        List<OrderDTO> pending_orders = new ArrayList<>();
+        for(Order i: orders){
+            if(i.getStatus().equals("pending")){
+                pending_orders.add(toDTO(i));
+            }
+        }
+
+        return pending_orders;
     }
 
 
